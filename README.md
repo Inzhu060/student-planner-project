@@ -28,6 +28,7 @@ A specific date and time can be set for each task.
 The system allows users to set reminders so they do not forget important assignments or events.
 
 - Progress Tracking
+  
 Users can mark tasks as completed and monitor their progress.
 
 Future Improvements:  
