@@ -10,6 +10,7 @@ Project Description:
 Student Planner is a web application built with Angular and Django REST Framework. It helps students manage subjects, tasks, deadlines and reminders.
 
 What does the app do?
+
 Student Planner allows a student to:
 - Manage subjects
   
