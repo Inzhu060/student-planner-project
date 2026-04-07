@@ -27,4 +27,4 @@ The system allows users to set reminders so they do not forget important assignm
 Users can mark tasks as completed and monitor their progress.
 
 Future Improvements:  
-The application can be extended with features such as a calendar view, priority levels, and notifications.
+In the future the application can be extended with features such as a calendar view, priority levels, and notifications.
