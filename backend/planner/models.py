@@ -38,4 +38,23 @@ class Subject(models.Model):
         description = models.TextField(blank=True)
         deadline = models.DateTimeField()
         priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium')
-        status = models.BooleanField(default=False)
+        status = models.CharField(max_length=10, chices=STATUS_CHOICES, default='pending')
+        is_completed = models.BooleanField(default=False)
+        created_at = models.DateTimeField(auto_now_add=True)
+
+        objects = TaskManager()
+
+        def __str__(self):
+            return self.title
+
+
+class Reminder(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, realted_name='reminders')
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='reminders')
+    remind_at = models.DateTimeField()
+    message = models.CharField(max_length=255)
+    is_sent = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reminder for {self.task.title}"
