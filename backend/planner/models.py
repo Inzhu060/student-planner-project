@@ -8,7 +8,7 @@ class TaskManager(models.Manager):
 
 
 class Profile(models.Model):
-    user = model.OneToOneField(User, on_delete+models.CASCADE, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     full_name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -22,34 +22,37 @@ class Subject(models.Model):
     color = models.CharField(max_length=30, default='blue')
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def Task(models.Model):
-        PRIORITY_CHOICES = [
-        ('low', 'Low'), ('medium', 'Medium'), ('high', 'High'),
-        ]
+    def __str__(self):
+        return self.name
 
-        STATUS_CHOICES = [
+class Task(models.Model):
+    PRIORITY_CHOICES = [
+        ('low', 'Low'), ('medium', 'Medium'), ('high', 'High'),
+    ]
+
+    STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('completed', 'Completed'),
-        ]
+    ]
 
-        user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'tasks')
-        subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='tasks')
-        title = models.CharField(max_length=150)
-        description = models.TextField(blank=True)
-        deadline = models.DateTimeField()
-        priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium')
-        status = models.CharField(max_length=10, chices=STATUS_CHOICES, default='pending')
-        is_completed = models.BooleanField(default=False)
-        created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name = 'tasks')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='tasks')
+    title = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
+    deadline = models.DateTimeField()
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    s_completed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-        objects = TaskManager()
+    objects = TaskManager()
 
-        def __str__(self):
-            return self.title
+    def __str__(self):
+        return self.title
 
 
 class Reminder(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, realted_name='reminders')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reminders')
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='reminders')
     remind_at = models.DateTimeField()
     message = models.CharField(max_length=255)
