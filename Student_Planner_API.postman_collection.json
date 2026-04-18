@@ -1,0 +1,468 @@
+{
+  "info": {
+    "_postman_id": "b30001bf-51dd-4935-9cfb-e80edf8e27b5",
+    "name": "Student Planner API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53633669",
+    "_collection_link": "https://go.postman.co/collection/53633669-b30001bf-51dd-4935-9cfb-e80edf8e27b5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"inzhu2\",\r\n  \"email\": \"inzhu2@mail.com\",\r\n  \"password\": \"Test1234!\",\r\n  \"full_name\": \"Inzhu User\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/register/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "register",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"inzhu2\",\r\n  \"password\": \"Test1234!\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/login/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "login",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Subject",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTEwMDEzLCJpYXQiOjE3NzY1MDY0MTMsImp0aSI6IjI0YTU2OGYxN2JkNzRjZWFiYmI1Nzg1ZTZjZjM1NmM0IiwidXNlcl9pZCI6IjQifQ.Cb4BjKaelW7eDVAzKiJwWFsZrT0WJqWSA1KQuj3ULd8",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Math\",\r\n  \"description\": \"Mathematics\",\r\n  \"color\": \"blue\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/subjects/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "subjects",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Subject List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTEwMDEzLCJpYXQiOjE3NzY1MDY0MTMsImp0aSI6IjI0YTU2OGYxN2JkNzRjZWFiYmI1Nzg1ZTZjZjM1NmM0IiwidXNlcl9pZCI6IjQifQ.Cb4BjKaelW7eDVAzKiJwWFsZrT0WJqWSA1KQuj3ULd8",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/subjects/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "subjects",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTIwNjU3LCJpYXQiOjE3NzY1MTcwNTcsImp0aSI6IjA1MDBjYzY2Nzg4MzQzZGI4OTgyNDIzZjNmMWE1MjVkIiwidXNlcl9pZCI6IjQifQ.ZDrOLn3y_QNQlIS1ormHTkilBnovzzGWqcGB0_kDB1g",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"subject\": 1,\r\n  \"title\": \"Finish math homework\",\r\n  \"description\": \"Solve exercises 1 to 10\",\r\n  \"deadline\": \"2026-04-20T18:00:00Z\",\r\n  \"priority\": \"high\",\r\n  \"status\": \"pending\",\r\n  \"is_completed\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tasks/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tasks",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Tasks",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Update Task",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTIwNjU3LCJpYXQiOjE3NzY1MTcwNTcsImp0aSI6IjA1MDBjYzY2Nzg4MzQzZGI4OTgyNDIzZjNmMWE1MjVkIiwidXNlcl9pZCI6IjQifQ.ZDrOLn3y_QNQlIS1ormHTkilBnovzzGWqcGB0_kDB1g",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"subject\": 1,\r\n  \"title\": \"Finish math homework\",\r\n  \"description\": \"Solved exercises 1 to 10\",\r\n  \"deadline\": \"2026-04-20T18:00:00Z\",\r\n  \"priority\": \"high\",\r\n  \"status\": \"completed\",\r\n  \"is_completed\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tasks/1/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tasks",
+            "1",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Reminder",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTIwNjU3LCJpYXQiOjE3NzY1MTcwNTcsImp0aSI6IjA1MDBjYzY2Nzg4MzQzZGI4OTgyNDIzZjNmMWE1MjVkIiwidXNlcl9pZCI6IjQifQ.ZDrOLn3y_QNQlIS1ormHTkilBnovzzGWqcGB0_kDB1g",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"task\": 1,\r\n  \"remind_at\": \"2026-04-19T12:00:00Z\",\r\n  \"message\": \"Do not forget your math homework\",\r\n  \"is_sent\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/reminders/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "reminders",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Reminders",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Dashboard",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "Update Subject",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4NzQ1LCJpYXQiOjE3NzY1MjUxNDUsImp0aSI6IjU3ZmNiODE5YzYwYTQ0YTNiZTgyMDE3ZGE4NDQyMTI1IiwidXNlcl9pZCI6IjQifQ.kcH0YVMGhTfRdKerimBvfjWCsfQbBsjrWq96ZlJBowc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Math Updated\",\r\n  \"description\": \"Updated description\",\r\n  \"color\": \"green\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/subjects/1/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "subjects",
+            "1",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Subject",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4NzQ1LCJpYXQiOjE3NzY1MjUxNDUsImp0aSI6IjU3ZmNiODE5YzYwYTQ0YTNiZTgyMDE3ZGE4NDQyMTI1IiwidXNlcl9pZCI6IjQifQ.kcH0YVMGhTfRdKerimBvfjWCsfQbBsjrWq96ZlJBowc",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/subjects/1/?=",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "subjects",
+            "1",
+            ""
+          ],
+          "query": [
+            {
+              "key": null,
+              "value": "",
+              "type": "text"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Reminder",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4NzQ1LCJpYXQiOjE3NzY1MjUxNDUsImp0aSI6IjU3ZmNiODE5YzYwYTQ0YTNiZTgyMDE3ZGE4NDQyMTI1IiwidXNlcl9pZCI6IjQifQ.kcH0YVMGhTfRdKerimBvfjWCsfQbBsjrWq96ZlJBowc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"task\": 1,\r\n  \"remind_at\": \"2026-04-19T15:00:00Z\",\r\n  \"message\": \"Updated reminder\",\r\n  \"is_sent\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/reminders/1/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "reminders",
+            "1",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Reminder",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4NzQ1LCJpYXQiOjE3NzY1MjUxNDUsImp0aSI6IjU3ZmNiODE5YzYwYTQ0YTNiZTgyMDE3ZGE4NDQyMTI1IiwidXNlcl9pZCI6IjQifQ.kcH0YVMGhTfRdKerimBvfjWCsfQbBsjrWq96ZlJBowc",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/reminders/1/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "reminders",
+            "1",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Task",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4NzQ1LCJpYXQiOjE3NzY1MjUxNDUsImp0aSI6IjU3ZmNiODE5YzYwYTQ0YTNiZTgyMDE3ZGE4NDQyMTI1IiwidXNlcl9pZCI6IjQifQ.kcH0YVMGhTfRdKerimBvfjWCsfQbBsjrWq96ZlJBowc",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/tasks/1/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "tasks",
+            "1",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
