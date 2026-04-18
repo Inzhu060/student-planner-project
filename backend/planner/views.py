@@ -6,6 +6,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import permission_classes
 
 from .models import Subject, Task, Reminder
 from .serializers import (
@@ -17,6 +19,7 @@ from .serializers import (
 )
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def register_view(request):
     serializer = RegisterSerializer(data=request.data)
 
@@ -27,12 +30,13 @@ def register_view(request):
     return Response(serializer.errors, status=400)
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def login_view(request):
     serializer = LoginSerializer(data=request.data)
 
     if serializer.is_valid():
-        username = serializer.data['username']
-        password = serializer.data['password']
+        username = serializer.validated_data['username']
+        password = serializer.validated_data['password']
 
         user = authenticate(username=username, password=password)
 
