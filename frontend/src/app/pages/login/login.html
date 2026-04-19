@@ -26,7 +26,7 @@
         <input [(ngModel)]="password" type="password" placeholder="Password" />
       </div>
 
-      <button (click)="login()">Login</button>
+      <button type="button" (click)="login()">Login</button>
 
       @if (errorMessage) {
         <p class="error">{{ errorMessage }}</p>

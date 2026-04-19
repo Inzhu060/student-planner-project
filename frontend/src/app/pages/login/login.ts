@@ -18,6 +18,10 @@ export class LoginComponent {
   errorMessage = '';
 
   login(): void {
+    console.log('login clicked');
+    console.log('username:', this.username);
+    console.log('password:', this.password);
+
     this.errorMessage = '';
 
     this.authService.login({
@@ -25,11 +29,23 @@ export class LoginComponent {
       password: this.password
     }).subscribe({
       next: (res) => {
+        console.log('LOGIN SUCCESS:', res);
+
         this.authService.saveTokens(res.access, res.refresh);
-        this.router.navigate(['/dashboard']);
+        this.authService.saveUser(this.username);
+
+        console.log('saved access:', localStorage.getItem('access'));
+
+        this.router.navigate(['/dashboard']).then((ok) => {
+          console.log('navigate result:', ok);
+        });
       },
       error: (err) => {
-        this.errorMessage = err.error?.error || 'Login failed';
+        console.log('LOGIN ERROR:', err);
+        this.errorMessage =
+          err.error?.error ||
+          JSON.stringify(err.error) ||
+          'Login failed';
       }
     });
   }
