@@ -27,6 +27,7 @@ export class LoginComponent {
       next: (res) => {
         this.authService.saveTokens(res.access, res.refresh);
         this.router.navigate(['/dashboard']);
+        this.authService.saveUser(this.username);
       },
       error: (err) => {
         this.errorMessage = err.error?.error || 'Login failed';

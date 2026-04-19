@@ -2,7 +2,7 @@
   <aside class="sidebar">
     <div class="brand-block">
       <div class="brand">StudentPlanner</div>
-      <div class="brand-subtitle">Welcome, Student</div>
+      <div class="brand-subtitle">Welcome, {{ username }}</div>
     </div>
 
     <nav class="nav-links">
@@ -28,7 +28,7 @@
       <div class="user-box">
         <div class="avatar"></div>
         <div>
-          <div class="user-name">Student User</div>
+          <div class="user-name">{{ username }}</div>
           <div class="user-role">Student</div>
         </div>
       </div>
@@ -56,13 +56,13 @@
           </div>
 
           <div class="stat-card">
-            <div class="stat-label">Active</div>
-            <div class="stat-value purple">{{ stats.pending_tasks }}</div>
+            <div class="stat-label">Completed</div>
+            <div class="stat-value green">{{ stats.completed_tasks }}</div>
           </div>
 
           <div class="stat-card">
-            <div class="stat-label">Completed</div>
-            <div class="stat-value green">{{ stats.completed_tasks }}</div>
+            <div class="stat-label">Pending</div>
+            <div class="stat-value purple">{{ stats.pending_tasks }}</div>
           </div>
 
           <div class="stat-card">
@@ -70,26 +70,95 @@
             <div class="stat-value yellow">{{ stats.overdue_tasks }}</div>
           </div>
         </div>
-      }
 
-      <div class="section-card">
-        <h2 class="section-title">Quick Overview</h2>
+        <div class="section-card" style="margin-bottom: 20px;">
+          <h2 class="section-title">Completion Progress</h2>
 
-        @if (stats) {
-          <div class="list-grid">
-            <div class="item-card">
-              <div class="item-title">Study Progress</div>
-              <div class="item-subtitle">Current academic activity snapshot</div>
+          <div class="progress-wrap">
+            <div class="progress-top">
+              <span>{{ getProgressPercentage() }}% completed</span>
+              <span>{{ stats.completed_tasks }}/{{ stats.total_tasks }}</span>
+            </div>
 
-              <div class="meta-row">
-                <span class="badge badge-blue">Total: {{ stats.total_tasks }}</span>
-                <span class="badge badge-purple">Pending: {{ stats.pending_tasks }}</span>
-                <span class="badge badge-green">Completed: {{ stats.completed_tasks }}</span>
-                <span class="badge badge-yellow">Overdue: {{ stats.overdue_tasks }}</span>
-              </div>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
             </div>
           </div>
-        }
+        </div>
+      }
+
+      <div class="dashboard-grid">
+        <div class="section-card">
+          <h2 class="section-title">Upcoming Deadlines</h2>
+
+          @if (getUpcomingDeadlines().length === 0) {
+            <div class="empty-state">No upcoming deadlines.</div>
+          } @else {
+            <div class="list-grid">
+              @for (task of getUpcomingDeadlines(); track task.id) {
+                <div class="item-card" [class.overdue-card]="isOverdue(task)">
+                  <div class="item-header">
+                    <div>
+                      <h3 class="item-title">{{ task.title }}</h3>
+                      <div class="item-subtitle">{{ task.subject_name }}</div>
+                    </div>
+
+                    <span
+                      class="badge"
+                      [class.badge-red]="task.priority === 'high'"
+                      [class.badge-yellow]="task.priority === 'medium'"
+                      [class.badge-green]="task.priority === 'low'"
+                    >
+                      {{ task.priority }}
+                    </span>
+                  </div>
+
+                  <div class="meta-row">
+                    <span class="badge badge-blue">{{ formatDate(task.deadline) }}</span>
+
+                    @if (isOverdue(task)) {
+                      <span class="badge badge-red">Overdue</span>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="section-card">
+          <h2 class="section-title">Recent Tasks</h2>
+
+          @if (getRecentTasks().length === 0) {
+            <div class="empty-state">No recent tasks.</div>
+          } @else {
+            <div class="list-grid">
+              @for (task of getRecentTasks(); track task.id) {
+                <div class="item-card">
+                  <div class="item-header">
+                    <div>
+                      <h3 class="item-title">{{ task.title }}</h3>
+                      <div class="item-subtitle">{{ task.subject_name }}</div>
+                    </div>
+
+                    <span
+                      class="badge"
+                      [class.badge-green]="task.is_completed"
+                      [class.badge-gray]="!task.is_completed"
+                    >
+                      {{ task.is_completed ? 'Completed' : 'Pending' }}
+                    </span>
+                  </div>
+
+                  <div class="meta-row">
+                    <span class="badge badge-purple">{{ task.subject_name }}</span>
+                    <span class="badge badge-blue">{{ formatDate(task.created_at) }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
       </div>
     </div>
   </main>

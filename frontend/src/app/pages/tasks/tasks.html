@@ -93,17 +93,47 @@
         @if (errorMessage) {
           <div class="message message-error">{{ errorMessage }}</div>
         }
+
+        @if (successMessage) {
+          <div class="message message-success">{{ successMessage }}</div>
+        }
       </div>
 
-      @if (tasks.length === 0) {
-        <div class="empty-state">No tasks yet.</div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-row-3">
+            <input
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="applyFilters()"
+              class="input"
+              placeholder="Search by title"
+            />
+
+            <select [(ngModel)]="filterStatus" (ngModelChange)="applyFilters()" class="select">
+              <option value="all">All</option>
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+              <option value="high">High Priority</option>
+            </select>
+
+            <select [(ngModel)]="sortBy" (ngModelChange)="applyFilters()" class="select">
+              <option value="deadline">Sort by deadline</option>
+              <option value="priority">Sort by priority</option>
+              <option value="created_at">Sort by created date</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      @if (filteredTasks.length === 0) {
+        <div class="empty-state">No tasks found.</div>
       } @else {
         <div class="section-card">
-          <h2 class="section-title">Upcoming Deadlines</h2>
+          <h2 class="section-title">Task List</h2>
 
           <div class="list-grid">
-            @for (task of tasks; track task.id) {
-              <div class="item-card">
+            @for (task of filteredTasks; track task.id) {
+              <div class="item-card" [class.overdue-card]="isOverdue(task)">
                 <div class="task-row">
                   <input class="task-check" type="checkbox" [checked]="task.is_completed" />
 
@@ -114,6 +144,8 @@
                         <div class="item-subtitle">{{ task.subject_name }}</div>
                       </div>
                     </div>
+
+                    <p class="item-text">{{ task.description || 'No description' }}</p>
 
                     <div class="meta-row">
                       <span class="badge badge-purple">{{ task.subject_name }}</span>
@@ -127,11 +159,30 @@
                         {{ task.priority }}
                       </span>
 
-                      <span class="badge badge-blue">{{ task.deadline }}</span>
-                      <span class="badge badge-gray">{{ task.status }}</span>
+                      <span class="badge badge-blue">
+                        Deadline: {{ formatDate(task.deadline) }}
+                      </span>
+
+                      <span class="badge badge-gray">
+                        {{ task.status }}
+                      </span>
+
+                      @if (isOverdue(task)) {
+                        <span class="badge badge-red">Overdue</span>
+                      }
+
+                      @if (task.is_completed) {
+                        <span class="badge badge-green">Completed</span>
+                      }
                     </div>
 
                     <div class="btn-row">
+                      @if (!task.is_completed) {
+                        <button class="btn btn-primary" (click)="markAsCompleted(task)">
+                          Mark as completed
+                        </button>
+                      }
+
                       <button class="btn btn-warning" (click)="editTask(task)">Edit</button>
                       <button class="btn btn-danger" (click)="deleteTask(task.id)">Delete</button>
                     </div>

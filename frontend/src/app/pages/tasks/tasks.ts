@@ -20,8 +20,10 @@ export class TasksComponent {
   private router = inject(Router);
 
   tasks: Task[] = [];
+  filteredTasks: Task[] = [];
   subjects: Subject[] = [];
   errorMessage = '';
+  successMessage = '';
 
   subject = 0;
   title = '';
@@ -33,6 +35,10 @@ export class TasksComponent {
 
   editingId: number | null = null;
 
+  filterStatus = 'all';
+  sortBy = 'deadline';
+  searchTerm = '';
+
   ngOnInit(): void {
     this.loadTasks();
     this.loadSubjects();
@@ -40,20 +46,30 @@ export class TasksComponent {
 
   loadTasks(): void {
     this.taskService.getTasks().subscribe({
-      next: (res) => this.tasks = res,
-      error: () => this.errorMessage = 'Failed to load tasks'
+      next: (res) => {
+        this.tasks = res;
+        this.applyFilters();
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load tasks';
+      }
     });
   }
 
   loadSubjects(): void {
     this.subjectService.getSubjects().subscribe({
-      next: (res) => this.subjects = res,
-      error: () => this.errorMessage = 'Failed to load subjects'
+      next: (res) => {
+        this.subjects = res;
+      },
+      error: () => {
+        this.errorMessage = 'Failed to load subjects';
+      }
     });
   }
 
   saveTask(): void {
     this.errorMessage = '';
+    this.successMessage = '';
 
     const payload = {
       subject: Number(this.subject),
@@ -68,18 +84,24 @@ export class TasksComponent {
     if (this.editingId) {
       this.taskService.updateTask(this.editingId, payload).subscribe({
         next: () => {
+          this.successMessage = 'Task updated successfully';
           this.resetForm();
           this.loadTasks();
         },
-        error: () => this.errorMessage = 'Failed to update task'
+        error: () => {
+          this.errorMessage = 'Failed to update task';
+        }
       });
     } else {
       this.taskService.createTask(payload).subscribe({
         next: () => {
+          this.successMessage = 'Task created successfully';
           this.resetForm();
           this.loadTasks();
         },
-        error: () => this.errorMessage = 'Failed to create task'
+        error: () => {
+          this.errorMessage = 'Failed to create task';
+        }
       });
     }
   }
@@ -96,10 +118,109 @@ export class TasksComponent {
   }
 
   deleteTask(id: number): void {
+    const confirmed = window.confirm('Are you sure you want to delete this task?');
+
+    if (!confirmed) {
+      return;
+    }
+
     this.taskService.deleteTask(id).subscribe({
-      next: () => this.loadTasks(),
-      error: () => this.errorMessage = 'Failed to delete task'
+      next: () => {
+        this.successMessage = 'Task deleted successfully';
+        this.loadTasks();
+      },
+      error: () => {
+        this.errorMessage = 'Failed to delete task';
+      }
     });
+  }
+
+  markAsCompleted(task: Task): void {
+    const payload = {
+      subject: task.subject,
+      title: task.title,
+      description: task.description,
+      deadline: task.deadline,
+      priority: task.priority,
+      status: 'completed' as 'completed',
+      is_completed: true
+    };
+
+    this.taskService.updateTask(task.id, payload).subscribe({
+      next: () => {
+        this.successMessage = 'Task marked as completed';
+        this.loadTasks();
+      },
+      error: () => {
+        this.errorMessage = 'Failed to update task';
+      }
+    });
+  }
+
+  applyFilters(): void {
+    let result = [...this.tasks];
+
+    if (this.searchTerm.trim()) {
+      result = result.filter(task =>
+        task.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+
+    if (this.filterStatus === 'pending') {
+      result = result.filter(task => !task.is_completed);
+    } else if (this.filterStatus === 'completed') {
+      result = result.filter(task => task.is_completed);
+    } else if (this.filterStatus === 'high') {
+      result = result.filter(task => task.priority === 'high');
+    }
+
+    if (this.sortBy === 'deadline') {
+      result.sort((a, b) =>
+        new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+      );
+    } else if (this.sortBy === 'priority') {
+      const priorityOrder = { high: 1, medium: 2, low: 3 };
+      result.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+    } else if (this.sortBy === 'created_at') {
+      result.sort((a, b) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+    }
+
+    this.filteredTasks = result;
+  }
+
+  isOverdue(task: Task): boolean {
+    return !task.is_completed && new Date(task.deadline) < new Date();
+  }
+
+  formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+
+  getCompletedCount(): number {
+    return this.tasks.filter(task => task.is_completed).length;
+  }
+
+  getPendingCount(): number {
+    return this.tasks.filter(task => !task.is_completed).length;
+  }
+
+  getOverdueCount(): number {
+    return this.tasks.filter(task => this.isOverdue(task)).length;
+  }
+
+  getUpcomingDeadlines(): Task[] {
+    return [...this.tasks]
+      .filter(task => !task.is_completed)
+      .sort((a, b) => new Date(a.deadline).getTime() - new Date(b.deadline).getTime())
+      .slice(0, 5);
   }
 
   resetForm(): void {

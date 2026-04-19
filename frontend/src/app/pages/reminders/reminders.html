@@ -28,7 +28,7 @@
       <div class="user-box">
         <div class="avatar"></div>
         <div>
-          <div class="user-name">Student User</div>
+          <div class="user-name">Student</div>
           <div class="user-role">Student</div>
         </div>
       </div>
@@ -77,6 +77,10 @@
         @if (errorMessage) {
           <div class="message message-error">{{ errorMessage }}</div>
         }
+
+        @if (successMessage) {
+          <div class="message message-success">{{ successMessage }}</div>
+        }
       </div>
 
       @if (reminders.length === 0) {
@@ -91,8 +95,12 @@
                   <div class="item-subtitle">Reminder entry</div>
                 </div>
 
-                <span class="badge" [class.badge-green]="reminder.is_sent" [class.badge-yellow]="!reminder.is_sent">
-                  {{ reminder.is_sent ? 'Sent' : 'Pending' }}
+                <span
+                  class="badge"
+                  [class.badge-green]="reminder.is_sent"
+                  [class.badge-yellow]="!reminder.is_sent"
+                >
+                  {{ getReminderStatus(reminder) }}
                 </span>
               </div>
 
@@ -100,15 +108,23 @@
 
               <div class="meta-row">
                 <span class="badge badge-blue">{{ reminder.remind_at }}</span>
+                <span class="badge badge-purple">{{ getTimeUntil(reminder.remind_at) }}</span>
               </div>
 
               <div class="btn-row">
+                @if (!reminder.is_sent) {
+                  <button class="btn btn-primary" (click)="markAsSent(reminder)">
+                    Mark as sent
+                  </button>
+                }
+
                 <button class="btn btn-warning" (click)="editReminder(reminder)">Edit</button>
                 <button class="btn btn-danger" (click)="deleteReminder(reminder.id)">Delete</button>
               </div>
             </div>
           }
         </div>
+
       }
     </div>
   </main>
