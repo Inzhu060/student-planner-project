@@ -1,0 +1,96 @@
+<div class="page-shell">
+  <aside class="sidebar">
+    <div class="brand-block">
+      <div class="brand">StudentPlanner</div>
+      <div class="brand-subtitle">Welcome, Student</div>
+    </div>
+
+    <nav class="nav-links">
+      <a class="nav-link active" routerLink="/dashboard">
+        <span class="nav-icon">⌘</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/subjects">
+        <span class="nav-icon">◫</span>
+        <span>Subjects</span>
+      </a>
+      <a class="nav-link" routerLink="/tasks">
+        <span class="nav-icon">☑</span>
+        <span>Tasks</span>
+      </a>
+      <a class="nav-link" routerLink="/reminders">
+        <span class="nav-icon">◔</span>
+        <span>Reminders</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-box">
+        <div class="avatar"></div>
+        <div>
+          <div class="user-name">Student User</div>
+          <div class="user-role">Student</div>
+        </div>
+      </div>
+
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="content-panel">
+      <div class="topbar">
+        <h1 class="page-title">Dashboard</h1>
+        <div class="page-subtitle">Overview of your studies</div>
+      </div>
+
+      @if (errorMessage) {
+        <div class="message message-error">{{ errorMessage }}</div>
+      }
+
+      @if (stats) {
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Tasks</div>
+            <div class="stat-value">{{ stats.total_tasks }}</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Active</div>
+            <div class="stat-value purple">{{ stats.pending_tasks }}</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Completed</div>
+            <div class="stat-value green">{{ stats.completed_tasks }}</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Overdue</div>
+            <div class="stat-value yellow">{{ stats.overdue_tasks }}</div>
+          </div>
+        </div>
+      }
+
+      <div class="section-card">
+        <h2 class="section-title">Quick Overview</h2>
+
+        @if (stats) {
+          <div class="list-grid">
+            <div class="item-card">
+              <div class="item-title">Study Progress</div>
+              <div class="item-subtitle">Current academic activity snapshot</div>
+
+              <div class="meta-row">
+                <span class="badge badge-blue">Total: {{ stats.total_tasks }}</span>
+                <span class="badge badge-purple">Pending: {{ stats.pending_tasks }}</span>
+                <span class="badge badge-green">Completed: {{ stats.completed_tasks }}</span>
+                <span class="badge badge-yellow">Overdue: {{ stats.overdue_tasks }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </main>
+</div>

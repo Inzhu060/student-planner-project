@@ -1,0 +1,98 @@
+<div class="page-shell">
+  <aside class="sidebar">
+    <div class="brand-block">
+      <div class="brand">StudentPlanner</div>
+      <div class="brand-subtitle">Welcome, Student</div>
+    </div>
+
+    <nav class="nav-links">
+      <a class="nav-link" routerLink="/dashboard">
+        <span class="nav-icon">⌘</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link active" routerLink="/subjects">
+        <span class="nav-icon">◫</span>
+        <span>Subjects</span>
+      </a>
+      <a class="nav-link" routerLink="/tasks">
+        <span class="nav-icon">☑</span>
+        <span>Tasks</span>
+      </a>
+      <a class="nav-link" routerLink="/reminders">
+        <span class="nav-icon">◔</span>
+        <span>Reminders</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-box">
+        <div class="avatar"></div>
+        <div>
+          <div class="user-name">Student User</div>
+          <div class="user-role">Student</div>
+        </div>
+      </div>
+
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="content-panel">
+      <div class="topbar">
+        <h1 class="page-title">Subjects</h1>
+        <div class="page-subtitle">Manage your academic subjects</div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-row-2">
+            <input [(ngModel)]="name" class="input" placeholder="Subject name" />
+            <input [(ngModel)]="color" class="input" placeholder="Color" />
+          </div>
+
+          <textarea [(ngModel)]="description" class="textarea" placeholder="Description"></textarea>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" (click)="saveSubject()">
+              {{ editingId ? 'Update Subject' : 'Add Subject' }}
+            </button>
+
+            @if (editingId) {
+              <button class="btn btn-secondary" (click)="resetForm()">Cancel</button>
+            }
+          </div>
+        </div>
+
+        @if (errorMessage) {
+          <div class="message message-error">{{ errorMessage }}</div>
+        }
+      </div>
+
+      @if (subjects.length === 0) {
+        <div class="empty-state">No subjects yet.</div>
+      } @else {
+        <div class="list-grid">
+          @for (subject of subjects; track subject.id) {
+            <div class="item-card">
+              <div class="item-header">
+                <div>
+                  <h3 class="item-title">{{ subject.name }}</h3>
+                  <div class="item-subtitle">Created: {{ subject.created_at }}</div>
+                </div>
+                <span class="badge badge-purple">{{ subject.color }}</span>
+              </div>
+
+              <p class="item-text">{{ subject.description || 'No description' }}</p>
+
+              <div class="btn-row">
+                <button class="btn btn-warning" (click)="editSubject(subject)">Edit</button>
+                <button class="btn btn-danger" (click)="deleteSubject(subject.id)">Delete</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </main>
+</div>

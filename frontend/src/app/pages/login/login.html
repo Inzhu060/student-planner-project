@@ -1,0 +1,32 @@
+<div class="auth-wrapper">
+  <div class="auth-left">
+    <h1>Plan your academic life with confidence</h1>
+    <p>
+      Organize tasks, subjects and reminders in one modern workspace.
+      Stay focused, meet deadlines and track your study progress.
+    </p>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <h2>Login</h2>
+      <p>Sign in to StudentPlanner</p>
+
+      <div class="form-grid">
+        <input [(ngModel)]="username" class="input" placeholder="Username" />
+        <input [(ngModel)]="password" class="input" type="password" placeholder="Password" />
+
+        <button class="btn btn-primary" (click)="login()">Login</button>
+      </div>
+
+      @if (errorMessage) {
+        <div class="message message-error">{{ errorMessage }}</div>
+      }
+
+      <p style="margin-top: 16px;">
+        Don’t have an account?
+        <a class="auth-link" routerLink="/register">Register</a>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<div class="page-shell">
+  <aside class="sidebar">
+    <div class="brand-block">
+      <div class="brand">StudentPlanner</div>
+      <div class="brand-subtitle">Welcome, Student</div>
+    </div>
+
+    <nav class="nav-links">
+      <a class="nav-link" routerLink="/dashboard">
+        <span class="nav-icon">⌘</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-link" routerLink="/subjects">
+        <span class="nav-icon">◫</span>
+        <span>Subjects</span>
+      </a>
+      <a class="nav-link active" routerLink="/tasks">
+        <span class="nav-icon">☑</span>
+        <span>Tasks</span>
+      </a>
+      <a class="nav-link" routerLink="/reminders">
+        <span class="nav-icon">◔</span>
+        <span>Reminders</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-box">
+        <div class="avatar"></div>
+        <div>
+          <div class="user-name">Student User</div>
+          <div class="user-role">Student</div>
+        </div>
+      </div>
+
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="content-panel">
+      <div class="topbar">
+        <h1 class="page-title">Tasks</h1>
+        <div class="page-subtitle">Track deadlines and assignments</div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-row-2">
+            <select [(ngModel)]="subject" class="select">
+              <option [ngValue]="0">Select subject</option>
+              @for (sub of subjects; track sub.id) {
+                <option [ngValue]="sub.id">{{ sub.name }}</option>
+              }
+            </select>
+
+            <input [(ngModel)]="title" class="input" placeholder="Task title" />
+          </div>
+
+          <textarea [(ngModel)]="description" class="textarea" placeholder="Description"></textarea>
+
+          <div class="form-row-3">
+            <input [(ngModel)]="deadline" class="input" type="datetime-local" />
+
+            <select [(ngModel)]="priority" class="select">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+
+            <select [(ngModel)]="status" class="select">
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+
+          <label class="checkbox-row">
+            <input [(ngModel)]="is_completed" type="checkbox" />
+            Mark as completed
+          </label>
+
+          <div class="btn-row">
+            <button class="btn btn-primary" (click)="saveTask()">
+              {{ editingId ? 'Update Task' : 'Add Task' }}
+            </button>
+
+            @if (editingId) {
+              <button class="btn btn-secondary" (click)="resetForm()">Cancel</button>
+            }
+          </div>
+        </div>
+
+        @if (errorMessage) {
+          <div class="message message-error">{{ errorMessage }}</div>
+        }
+      </div>
+
+      @if (tasks.length === 0) {
+        <div class="empty-state">No tasks yet.</div>
+      } @else {
+        <div class="section-card">
+          <h2 class="section-title">Upcoming Deadlines</h2>
+
+          <div class="list-grid">
+            @for (task of tasks; track task.id) {
+              <div class="item-card">
+                <div class="task-row">
+                  <input class="task-check" type="checkbox" [checked]="task.is_completed" />
+
+                  <div class="task-main">
+                    <div class="item-header">
+                      <div>
+                        <h3 class="item-title">{{ task.title }}</h3>
+                        <div class="item-subtitle">{{ task.subject_name }}</div>
+                      </div>
+                    </div>
+
+                    <div class="meta-row">
+                      <span class="badge badge-purple">{{ task.subject_name }}</span>
+
+                      <span
+                        class="badge"
+                        [class.badge-red]="task.priority === 'high'"
+                        [class.badge-yellow]="task.priority === 'medium'"
+                        [class.badge-green]="task.priority === 'low'"
+                      >
+                        {{ task.priority }}
+                      </span>
+
+                      <span class="badge badge-blue">{{ task.deadline }}</span>
+                      <span class="badge badge-gray">{{ task.status }}</span>
+                    </div>
+
+                    <div class="btn-row">
+                      <button class="btn btn-warning" (click)="editTask(task)">Edit</button>
+                      <button class="btn btn-danger" (click)="deleteTask(task.id)">Delete</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </main>
+</div>

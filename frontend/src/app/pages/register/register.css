@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f4f7fb;
+}
+
+.card {
+  width: 340px;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #16a34a;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}

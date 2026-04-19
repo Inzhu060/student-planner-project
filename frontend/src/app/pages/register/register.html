@@ -1,0 +1,37 @@
+<div class="auth-wrapper">
+  <div class="auth-left">
+    <h1>Create your student workspace</h1>
+    <p>
+      Build your study routine, track assignments and manage reminders with a clean planner dashboard.
+    </p>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <h2>Register</h2>
+      <p>Create a new StudentPlanner account</p>
+
+      <div class="form-grid">
+        <input [(ngModel)]="username" class="input" placeholder="Username" />
+        <input [(ngModel)]="email" class="input" type="email" placeholder="Email" />
+        <input [(ngModel)]="full_name" class="input" placeholder="Full name" />
+        <input [(ngModel)]="password" class="input" type="password" placeholder="Password" />
+
+        <button class="btn btn-primary" (click)="register()">Register</button>
+      </div>
+
+      @if (successMessage) {
+        <div class="message message-success">{{ successMessage }}</div>
+      }
+
+      @if (errorMessage) {
+        <div class="message message-error">{{ errorMessage }}</div>
+      }
+
+      <p style="margin-top: 16px;">
+        Already have an account?
+        <a class="auth-link" routerLink="/login">Login</a>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+.page {
+  padding: 24px;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #2563eb;
+}
+
+.nav button {
+  padding: 8px 14px;
+  background: #dc2626;
+  color: white;
+  border: none;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 16px;
+  max-width: 600px;
+}
+
+.card {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 18px;
+  border-radius: 12px;
+}
+
+.error {
+  color: red;
+}
