@@ -22,6 +22,7 @@
         <span class="nav-icon">◔</span>
         <span>Reminders</span>
       </a>
+
     </nav>
 
     <div class="sidebar-footer">
@@ -106,7 +107,7 @@
               [(ngModel)]="searchTerm"
               (ngModelChange)="applyFilters()"
               class="input"
-              placeholder="Search by title"
+              placeholder="🔍 Search by title"
             />
 
             <select [(ngModel)]="filterStatus" (ngModelChange)="applyFilters()" class="select">
@@ -126,7 +127,11 @@
       </div>
 
       @if (filteredTasks.length === 0) {
-        <div class="empty-state">No tasks found.</div>
+        <div class="empty-state">
+          <div class="emoji">📋</div>
+          <h3>No tasks yet</h3>
+          <p>Start by adding your first task</p>
+        </div>
       } @else {
         <div class="section-card">
           <h2 class="section-title">Task List</h2>
@@ -144,6 +149,7 @@
                         <div class="item-subtitle">{{ task.subject_name }}</div>
                       </div>
                     </div>
+
 
                     <p class="item-text">{{ task.description || 'No description' }}</p>
 

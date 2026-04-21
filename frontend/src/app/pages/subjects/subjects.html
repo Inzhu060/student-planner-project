@@ -22,6 +22,7 @@
         <span class="nav-icon">◔</span>
         <span>Reminders</span>
       </a>
+
     </nav>
 
     <div class="sidebar-footer">
@@ -70,7 +71,11 @@
       </div>
 
       @if (subjects.length === 0) {
-        <div class="empty-state">No subjects yet.</div>
+        <div class="empty-state">
+          <div class="emoji">📚</div>
+          <h3>No subjects yet</h3>
+          <p>Add your first subject to start organizing tasks</p>
+        </div>
       } @else {
         <div class="list-grid">
           @for (subject of subjects; track subject.id) {

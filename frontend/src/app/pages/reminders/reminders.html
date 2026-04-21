@@ -22,13 +22,14 @@
         <span class="nav-icon">◔</span>
         <span>Reminders</span>
       </a>
+
     </nav>
 
     <div class="sidebar-footer">
       <div class="user-box">
         <div class="avatar"></div>
         <div>
-          <div class="user-name">Student</div>
+          <div class="user-name">Student User</div>
           <div class="user-role">Student</div>
         </div>
       </div>
@@ -74,6 +75,7 @@
           </div>
         </div>
 
+
         @if (errorMessage) {
           <div class="message message-error">{{ errorMessage }}</div>
         }
@@ -84,7 +86,11 @@
       </div>
 
       @if (reminders.length === 0) {
-        <div class="empty-state">No reminders yet.</div>
+        <div class="empty-state">
+          <div class="emoji">⏰</div>
+          <h3>No reminders yet</h3>
+          <p>Add a reminder so you do not miss important deadlines.</p>
+        </div>
       } @else {
         <div class="list-grid">
           @for (reminder of reminders; track reminder.id) {
@@ -98,8 +104,7 @@
                 <span
                   class="badge"
                   [class.badge-green]="reminder.is_sent"
-                  [class.badge-yellow]="!reminder.is_sent"
-                >
+                  [class.badge-yellow]="!reminder.is_sent">
                   {{ getReminderStatus(reminder) }}
                 </span>
               </div>

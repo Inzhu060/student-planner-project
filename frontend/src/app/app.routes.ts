@@ -7,6 +7,7 @@ import { TasksComponent } from './pages/tasks/tasks';
 import { RemindersComponent } from './pages/reminders/reminders';
 import { authGuard } from './guards/auth.guard';
 
+
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -19,3 +20,6 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
 ];
+
+
+

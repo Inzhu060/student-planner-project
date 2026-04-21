@@ -25,6 +25,7 @@ export class RemindersComponent implements OnInit {
   tasks: Task[] = [];
   errorMessage = '';
   successMessage = '';
+  username = '';
 
   task = 0;
   remind_at = '';
@@ -33,6 +34,7 @@ export class RemindersComponent implements OnInit {
 
   editingId: number | null = null;
   notifiedIds: number[] = [];
+
 
   ngOnInit(): void {
     this.notificationService.requestPermission();
